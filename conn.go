@@ -1,7 +1,8 @@
 package main
 
 import (
-	"code.google.com/p/go.net/websocket"
+	"github.com/gorilla/websocket"
+	"net/http"
 )
 
 type connection struct {
@@ -9,13 +10,12 @@ type connection struct {
 	ws *websocket.Conn
 
 	// Buffered channel of outbound messages.
-	send chan string
+	send chan []byte
 }
 
 func (c *connection) reader() {
 	for {
-		var message string
-		err := websocket.Message.Receive(c.ws, &message)
+		_, message, err := c.ws.ReadMessage()
 		if err != nil {
 			break
 		}
@@ -26,7 +26,7 @@ func (c *connection) reader() {
 
 func (c *connection) writer() {
 	for message := range c.send {
-		err := websocket.Message.Send(c.ws, message)
+		err := c.ws.WriteMessage(websocket.TextMessage, message)
 		if err != nil {
 			break
 		}
@@ -34,8 +34,15 @@ func (c *connection) writer() {
 	c.ws.Close()
 }
 
-func wsHandler(ws *websocket.Conn) {
-	c := &connection{send: make(chan string, 256), ws: ws}
+func wsHandler(w http.ResponseWriter, r *http.Request) {
+	ws, err := websocket.Upgrade(w, r, nil, 1024, 1024)
+	if _, ok := err.(websocket.HandshakeError); ok {
+		http.Error(w, "Not a websocket handshake", 400)
+		return
+	} else if err != nil {
+		return
+	}
+	c := &connection{send: make(chan []byte, 256), ws: ws}
 	h.register <- c
 	defer func() { h.unregister <- c }()
 	go c.writer()

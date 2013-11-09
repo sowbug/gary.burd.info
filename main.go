@@ -1,7 +1,6 @@
 package main
 
 import (
-	"code.google.com/p/go.net/websocket"
 	"flag"
 	"log"
 	"net/http"
@@ -19,7 +18,7 @@ func main() {
 	flag.Parse()
 	go h.run()
 	http.HandleFunc("/", homeHandler)
-	http.Handle("/ws", websocket.Handler(wsHandler))
+	http.HandleFunc("/ws", wsHandler)
 	if err := http.ListenAndServe(*addr, nil); err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
