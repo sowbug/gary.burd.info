@@ -36,7 +36,6 @@ func (h *hub) run() {
 				default:
 					delete(h.connections, c)
 					close(c.send)
-					go c.ws.Close()
 				}
 			}
 		}
