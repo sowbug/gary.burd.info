@@ -34,12 +34,11 @@ func (c *connection) writer() {
 	c.ws.Close()
 }
 
+var upgrader = &websocket.Upgrader{ReadBufferSize: 1024, WriteBufferSize: 1024}
+
 func wsHandler(w http.ResponseWriter, r *http.Request) {
-	ws, err := websocket.Upgrade(w, r, nil, 1024, 1024)
-	if _, ok := err.(websocket.HandshakeError); ok {
-		http.Error(w, "Not a websocket handshake", 400)
-		return
-	} else if err != nil {
+	ws, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
 		return
 	}
 	c := &connection{send: make(chan []byte, 256), ws: ws}
