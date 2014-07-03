@@ -1,4 +1,4 @@
-This gist is the source code for http://gary.beagledreams.com/page/go-websocket-chat.html
+This repository is the source for http://gary.burd.info/go-websocket-chat.
 
 Copyright (c) 2013 Gary Burd
 
