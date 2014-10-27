@@ -1,4 +1,5 @@
-This repository is the source for http://gary.burd.info/go-websocket-chat.
+This repository contains the source code for the examples on
+http://gary.burd.info/.
 
 Copyright (c) 2013 Gary Burd
 
