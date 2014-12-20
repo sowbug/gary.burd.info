@@ -11,6 +11,9 @@ type connection struct {
 
 	// Buffered channel of outbound messages.
 	send chan []byte
+
+	// The hub.
+	h *hub
 }
 
 func (c *connection) reader() {
@@ -19,7 +22,7 @@ func (c *connection) reader() {
 		if err != nil {
 			break
 		}
-		h.broadcast <- message
+		c.h.broadcast <- message
 	}
 	c.ws.Close()
 }
@@ -36,14 +39,18 @@ func (c *connection) writer() {
 
 var upgrader = &websocket.Upgrader{ReadBufferSize: 1024, WriteBufferSize: 1024}
 
-func wsHandler(w http.ResponseWriter, r *http.Request) {
+type wsHandler struct {
+	h *hub
+}
+
+func (wsh wsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ws, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		return
 	}
-	c := &connection{send: make(chan []byte, 256), ws: ws}
-	h.register <- c
-	defer func() { h.unregister <- c }()
+	c := &connection{send: make(chan []byte, 256), ws: ws, h: wsh.h}
+	c.h.register <- c
+	defer func() { c.h.unregister <- c }()
 	go c.writer()
 	c.reader()
 }
