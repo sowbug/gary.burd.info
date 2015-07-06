@@ -16,7 +16,7 @@ var (
 )
 
 func defaultAssetPath() string {
-	p, err := build.Default.Import("github.com/gary.burd.info/go-websocket-chat", "", build.FindOnly)
+	p, err := build.Default.Import("github.com/garyburd/gary.burd.info/go-websocket-chat", "", build.FindOnly)
 	if err != nil {
 		return "."
 	}
