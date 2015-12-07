@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	addr      = flag.String("addr", ":8080", "http service address")
+	addr      = flag.String("addr", ":8443", "http service address")
 	assets    = flag.String("assets", defaultAssetPath(), "path to assets")
 	homeTempl *template.Template
 )
@@ -34,7 +34,7 @@ func main() {
 	go h.run()
 	http.HandleFunc("/", homeHandler)
 	http.Handle("/ws", wsHandler{h: h})
-	if err := http.ListenAndServe(*addr, nil); err != nil {
+	if err := http.ListenAndServeTLS(*addr, "fullchain.pem", "0000_key-letsencrypt.pem", nil); err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
 }
