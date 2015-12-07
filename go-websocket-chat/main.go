@@ -16,7 +16,7 @@ var (
 )
 
 func defaultAssetPath() string {
-	p, err := build.Default.Import("github.com/garyburd/gary.burd.info/go-websocket-chat", "", build.FindOnly)
+	p, err := build.Default.Import("github.com/sowbug/gary.burd.info/go-websocket-chat", "", build.FindOnly)
 	if err != nil {
 		return "."
 	}
@@ -34,6 +34,10 @@ func main() {
 	go h.run()
 	http.HandleFunc("/", homeHandler)
 	http.Handle("/ws", wsHandler{h: h})
+
+	staticFileServer := http.FileServer(http.Dir(filepath.Join(*assets, "/")))
+	http.Handle("/static/", staticFileServer)
+
 	if err := http.ListenAndServeTLS(*addr, "fullchain.pem", "0000_key-letsencrypt.pem", nil); err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
