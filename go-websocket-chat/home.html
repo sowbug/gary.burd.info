@@ -1,16 +1,20 @@
 <html>
 <head>
 <title>WebUSB Demo</title>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<meta name=viewport content="width=device-width, initial-scale=1">
+<script type="text/javascript"
+        src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <script type="text/javascript" src="static/chat.js"></script>
 <link rel="stylesheet" type="text/css" href="static/styles.css">
 </head>
 <body>
 <div id="log"></div>
 <form id="form">
-    <div class="light">Type something that includes the name of a color! And please share this URL!</div>
+    <div class="light">Type a color name!</div>
     <input type="submit" value="Send" />
-    <input type="text" id="msg" size="64"/>
+    <input type="text" id="msg" />
 </form>
 </body>
 </html>

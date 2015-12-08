@@ -1,38 +1,41 @@
-html {
+body {
+    background: black;
     font-family: Roboto, Helvetica, Arial, "Sans-serif";
     font-size: 12px;
-    overflow: hidden;
+    height: 98%;
+    margin: 0;
+    padding: 0;
+    width: 98%;
 }
 
-body {
-    overflow: hidden;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    background: black;
+input, textarea {
+    max-width: 100%;
+    font-family: Roboto, Helvetica, Arial, "Sans-serif";
+    font-size: 24px;
 }
 
 #log {
     background: white;
+    bottom: 6em;
+    color: #222;
+    font-size: 18px;
+    left: 0.5em;
     margin: 0;
+    overflow: auto;
     padding: 0.5em 0.5em 0.5em 0.5em;
     position: absolute;
-    top: 0.5em;
-    left: 0.5em;
     right: 0.5em;
-    bottom: 5em;
-    overflow: auto;
+    top: 0.5em;
 }
 
 #form {
-    padding: 0 0.5em 0 0.5em;
-    margin: 0;
-    position: absolute;
     bottom: 1em;
+    font-size: 24px;
     left: 0px;
+    margin: 0;
+    padding: 0 0.5em 0 0.5em;
+    position: absolute;
     width: 100%;
-    overflow: hidden;
 }
 
 .light {
