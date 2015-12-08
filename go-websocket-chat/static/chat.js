@@ -216,6 +216,8 @@ $(function() {
     }
   }
 
+  var handle = "anon" + Math.floor(Math.random() * 10000);
+
   $("#form").submit(function() {
     if (!conn) {
       return false;
@@ -223,9 +225,9 @@ $(function() {
     if (!msg.val()) {
       return false;
     }
-    conn.send(msg.val());
+    conn.send(handle + ": " + msg.val());
     msg.val("");
-    return false
+    return false;
   });
 
   $("input:text:visible:first").focus();

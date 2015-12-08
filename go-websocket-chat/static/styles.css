@@ -9,16 +9,16 @@ body {
 }
 
 input, textarea {
-    max-width: 100%;
+    max-width: 70%;
     font-family: Roboto, Helvetica, Arial, "Sans-serif";
     font-size: 24px;
 }
 
 #log {
     background: white;
-    bottom: 6em;
+    bottom: 5em;
     color: #222;
-    font-size: 18px;
+    font-size: 24px;
     left: 0.5em;
     margin: 0;
     overflow: auto;
